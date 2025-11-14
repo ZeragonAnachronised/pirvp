@@ -1,5 +1,5 @@
 import React from 'react'
-import { Head, Link, useForm } from '@inertiajs/react'
+import { router, Head, Link, useForm } from '@inertiajs/react'
 
 export default function CartIndex({ cart, items, total }) {
   const { delete: destroy, post } = useForm()
@@ -10,7 +10,7 @@ export default function CartIndex({ cart, items, total }) {
 
   const handleClear = () => {
     if (confirm('Вы уверены?')) {
-      post(route('cart.clear'))
+      router.get(route('cart.clear'))
     }
   }
 
