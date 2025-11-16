@@ -39,7 +39,10 @@ class WishController extends Controller
             ->exists();
 
         if ($exists) {
-            return redirect()->back()->with('error', 'Товар уже в списке желаний');
+            Wish::where('user_id', $user->id)
+                ->where('item_id', $item->id)
+                ->delete();
+            return redirect()->back()->with('error', 'Товар удалён из списка желаний');
         }
 
         Wish::create([

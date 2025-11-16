@@ -29,14 +29,14 @@ export default function OrdersIndex({ orders }) {
                       <div>
                         <p className="text-gray-600 text-sm">Статус</p>
                         <p className="font-semibold">
-                          <span className={`px-3 py-1 rounded text-sm ${
-                            order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                            order.status === 'cancelled' ? 'bg-emerald-100 text-red-800' :
-                            'bg-emerald-100 text-blue-800'
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                              order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                              order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                              order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
+                              order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
+                              'bg-gray-100 text-gray-800'
                           }`}>
-                            {order.status === 'pending' && 'В ожидании'}
-                            {order.status === 'completed' && 'Завершен'}
-                            {order.status === 'cancelled' && 'Отменен'}
+                              {order.status}
                           </span>
                         </p>
                       </div>

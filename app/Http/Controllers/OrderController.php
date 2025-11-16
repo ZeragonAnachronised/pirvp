@@ -34,7 +34,6 @@ class OrderController extends Controller
      */
     public function show(Order $order): Response
     {
-        $this->authorize('view', $order);
 
         $order->load('items.item');
 
@@ -47,7 +46,7 @@ class OrderController extends Controller
     /**
      * Show checkout form
      */
-    public function checkout(): Response
+    public function checkout()
     {
         $user = auth()->user();
         $cart = Cart::where('user_id', $user->id)

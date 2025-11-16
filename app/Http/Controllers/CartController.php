@@ -8,6 +8,7 @@ use App\Models\Item;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -29,10 +30,9 @@ class CartController extends Controller
     /**
      * Add item to cart
      */
-    public function add($id): RedirectResponse
+    public function add($id, $quantity): RedirectResponse
     {
         $item = Item::findOrFail($id);
-        $quantity = request('quantity', 1);
         $cart = $this->getOrCreateCart();
 
         $cartItem = $cart->items()->firstOrNew(['item_id' => $item->id]);

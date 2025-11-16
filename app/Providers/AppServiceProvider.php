@@ -6,8 +6,10 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Order;
 use App\Models\Review;
+use App\Models\User;
 use App\Policies\OrderPolicy;
 use App\Policies\ReviewPolicy;
+use App\Policies\AdminPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::policy(Order::class, OrderPolicy::class);
         Gate::policy(Review::class, ReviewPolicy::class);
+        Gate::policy(User::class, AdminPolicy::class);
     }
 }

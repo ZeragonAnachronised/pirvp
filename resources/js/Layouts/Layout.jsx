@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, usePage } from '@inertiajs/react'
 
 export default function Layout({ children }) {
   const { auth, flash } = usePage().props
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const [show, setShow] = useState(!!flash.message);
+
+    useEffect(() => {
+        if (flash.message) {
+            setShow(true);
+
+            const timer = setTimeout(() => {
+                setShow(false);
+            }, 1500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [flash.message]);
 
   return (
     <div className="min-h-screen flex flex-col bg-violet-50">
@@ -62,6 +76,11 @@ export default function Layout({ children }) {
                       <Link href={route('auth.showProfile')} className="block px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-violet-100">
                         Мой профиль
                       </Link>
+                      {auth.user.is_admin && (
+                        <Link href={route('admin.dashboard')} className="block px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-violet-100">
+                          Админ-панель
+                        </Link>
+                      )}
                       <form method="get" action={route('auth.logout')} className="block">
                         <button type="submit" className="w-full text-left px-4 py-2 text-gray-600 hover:text-blue-600 hover:bg-violet-100">
                           Выход
@@ -137,8 +156,8 @@ export default function Layout({ children }) {
       </header>
 
       {/* Flash Messages */}
-      {(flash.message || flash.error) && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      { show && (flash.message || flash.error) && (
+        <div className="fixed top-25 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-50">
           {flash.message && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
               {flash.message}

@@ -7,10 +7,7 @@ export default function ItemsShow({ item, relatedItems, averageRating, reviewCou
   const { post } = useForm()
 
   const handleAddToCart = () => {
-    router.post(route('cart.add', item.id), {
-      data: { quantity },
-      onSuccess: () => setQuantity(1)
-    })
+    post(route('cart.add', [item.id, quantity]))
   }
 
   const handleAddToWishlist = () => {
